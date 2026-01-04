@@ -42,15 +42,18 @@ namespace Stock_Management_System.Areas.Manage.Controllers
 
 
 
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Login(string returnTo = null)
         {
+            ViewBag.ReturnTo = returnTo; // pass to view
             return View();
         }
 
 
 
+
         [HttpPost]
-        public async Task<IActionResult> Login(Auth_Model model)
+        public async Task<IActionResult> Login(Auth_Model model, string returnTo)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +79,13 @@ namespace Stock_Management_System.Areas.Manage.Controllers
                         HttpContext.Session.SetString("Last_Login", DateTime.Now.ToString());
                         HttpContext.Session.SetString("JWT_Token", user.Token);
 
-                        return Json(new { success = true, redirectUrl = Url.Action("Dashboard", "Manage") });
+                        string returnToUrl = "/Manage/Dashboard";
+                        if (!string.IsNullOrEmpty(returnTo) && Url.IsLocalUrl(returnTo))
+                        {
+                            returnToUrl = returnTo;
+                        }
+
+                        return Json(new { success = true, redirectUrl = returnToUrl });
                     }
                     else
                     {

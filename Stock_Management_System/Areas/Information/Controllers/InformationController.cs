@@ -46,12 +46,13 @@ namespace Stock_Management_System.Areas.Information.Controllers
             List<Bank_Model> bank_Models = await api_Service.List_Of_Data_Display<Bank_Model>("Bank/GetBanksList");
             if (bank_Models != null)
             {
-                string baseUrl = "https://stock-manage-api-shree-ganesh-agro-ind.somee.com/";
                 foreach (var bank in bank_Models)
                 {
                     if (!string.IsNullOrEmpty(bank.BankIcon))
                     {
-                        bank.BankIcon = baseUrl + bank.BankIcon;
+                        string icon = bank.BankIcon;
+
+                        bank.BankIcon = "/Resources/Images/Banks/" + icon;
                     }
                 }
                 ViewBag.Banks = bank_Models;

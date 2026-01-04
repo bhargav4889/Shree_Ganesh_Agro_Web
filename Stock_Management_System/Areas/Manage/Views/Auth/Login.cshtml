@@ -16,9 +16,9 @@
                 </div>
                 <div class="login-userheading">
                     <h3>Login</h3>
-                    <h4>Login to your System</h4>
                 </div> 
                 <form id="loginForm" asp-action="Login" asp-controller="Auth" onsubmit="return CheckData()">
+                    <input type="hidden" name="returnTo" value="@ViewBag.ReturnTo" />
                     <div class="form-login">
                         <label><span style="color:red;">*</span> Username</label>
                         <div class="form-addons">

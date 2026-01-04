@@ -16,6 +16,7 @@ using Font = iTextSharp.text.Font;
 using System.Net.Http.Json;
 using System.Net.Http;
 using Stock_Management_System.BAL;
+using System;
 
 namespace Stock_Management_System.Areas.Invoices.Controllers
 {
@@ -344,16 +345,26 @@ namespace Stock_Management_System.Areas.Invoices.Controllers
                         // Get PdfContentByte
                         PdfContentByte contentByte = pdfWriter.DirectContent;
 
+                        string rupeefontPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                       "Resources", "Fonts", "Rupee.ttf");
+
+                        BaseFont inrfont = BaseFont.CreateFont(rupeefontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true);
+
+
+                        string gujaratiFontPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                       "Resources", "Fonts", "NotoSansGujarati.ttf");
+
+                        BaseFont gujaratifont = BaseFont.CreateFont(gujaratiFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true);
+
+
                         BaseFont defaultfont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED);
                         iTextSharp.text.Font dfont = new iTextSharp.text.Font(defaultfont, 18);
 
                         BaseFont boldfont = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.WINANSI, BaseFont.EMBEDDED);
                         iTextSharp.text.Font bfont = new iTextSharp.text.Font(boldfont, 18);
 
-                        BaseFont inrfont = BaseFont.CreateFont("https://stock-manage-api-shree-ganesh-agro-ind.somee.com/Fonts/Rupee.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, true);
                         iTextSharp.text.Font ifont = new iTextSharp.text.Font(inrfont, 18);
 
-                        BaseFont gujaratifont = BaseFont.CreateFont("https://stock-manage-api-shree-ganesh-agro-ind.somee.com/Fonts/NotoSansGujarati.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, true);
                         iTextSharp.text.Font font = new iTextSharp.text.Font(gujaratifont, 18);
                         font.Color = new BaseColor(Color.Red);
 

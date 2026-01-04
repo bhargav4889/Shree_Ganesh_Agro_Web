@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -11,7 +11,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\NotoSansGujarati.ttf" />
+    <None Remove="Resources\Fonts\NotoSansGujarati11.ttf" />
+    <None Remove="Resources\Fonts\Rupee.ttf" />
+    <None Remove="wwwroot\Resources\Images\Backimg.png" />
+    <None Remove="wwwroot\Resources\Images\Banks\axis.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\bank.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\bob.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\hdfc.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\icici.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\rajkot-nagrik-sahakri-bank.jpg" />
+    <None Remove="wwwroot\Resources\Images\Banks\rajkot-nagrik-sahakri-bank.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\sbi.svg" />
+    <None Remove="wwwroot\Resources\Images\Banks\union.svg" />
+    <None Remove="wwwroot\Resources\Images\Logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\section\sale\edit.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Fonts\NotoSansGujarati11.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +60,51 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\section\sale\edit.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Fonts\NotoSansGujarati.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Fonts\Rupee.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Resources\Images\Backimg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\axis.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\bank.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\bob.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\hdfc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\icici.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\rajkot-nagrik-sahakri-bank.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\rajkot-nagrik-sahakri-bank.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\sbi.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Banks\union.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\Images\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

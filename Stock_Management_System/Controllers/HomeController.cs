@@ -18,7 +18,7 @@ namespace Stock_Management_System.Controllers
         [CheckAccess]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Dashboard", "Manage");
         }
 
         public IActionResult Privacy()

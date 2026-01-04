@@ -14,8 +14,12 @@ namespace Stock_Management_System.BAL
             if (filterContext.HttpContext.Session.GetString("Auth_ID") == null)
             {
 
-                filterContext.HttpContext.Session.Clear();
-                filterContext.Result = new RedirectResult("~/Auth/Login");
+                filterContext.HttpContext.Session.Clear(); // Get current path and query string
+                var request = filterContext.HttpContext.Request;
+                var returnTo = request.Path + request.QueryString;
+
+                // Redirect to login with returnTo
+                filterContext.Result = new RedirectResult($"/Auth/Login?returnTo={Uri.EscapeDataString(returnTo)}");
             }
         }
 
