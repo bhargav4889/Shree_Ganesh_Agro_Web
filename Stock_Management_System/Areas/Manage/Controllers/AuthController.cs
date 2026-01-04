@@ -53,7 +53,7 @@ namespace Stock_Management_System.Areas.Manage.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Login(Auth_Model model, string returnTo)
+        public async Task<IActionResult> Login(Auth_Model model, string? returnTo = "")
         {
             if (ModelState.IsValid)
             {

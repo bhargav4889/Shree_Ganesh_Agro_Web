@@ -11,17 +11,35 @@ namespace Stock_Management_System.BAL
 
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            if (filterContext.HttpContext.Session.GetString("Auth_ID") == null)
+            var session = filterContext.HttpContext.Session;
+            if (session.GetString("Auth_ID") == null)
             {
+                session.Clear();
 
-                filterContext.HttpContext.Session.Clear(); // Get current path and query string
                 var request = filterContext.HttpContext.Request;
-                var returnTo = request.Path + request.QueryString;
+                var path = request.Path.Value; // e.g. "/Invoice/PurchaseInvoices" or "/"
 
-                // Redirect to login with returnTo
-                filterContext.Result = new RedirectResult($"/Auth/Login?returnTo={Uri.EscapeDataString(returnTo)}");
+                // Ignore root/home page for returnTo
+                string? returnTo = null;
+                if (!string.Equals(path, "/", StringComparison.OrdinalIgnoreCase) &&
+                    !string.Equals(path, "/Home/Index", StringComparison.OrdinalIgnoreCase))
+                {
+                    returnTo = path + request.QueryString;
+                }
+
+                if (!string.IsNullOrEmpty(returnTo))
+                {
+                    // Only add returnTo if user tried a protected page
+                    filterContext.Result = new RedirectResult($"/Auth/Login?returnTo={Uri.EscapeDataString(returnTo)}");
+                }
+                else
+                {
+                    // Otherwise just go to login without returnTo
+                    filterContext.Result = new RedirectResult("/Auth/Login");
+                }
             }
         }
+
 
 
         public override void OnResultExecuting(ResultExecutingContext filterContext)
