@@ -36,11 +36,11 @@
                         <label for="SelectReminder"><span style="color: red;">*</span> Remainder Type</label>
                         <select class="select" asp-for=ReminderType id="SelectReminder" aria-label="selectReminder">
                             <option selected disabled value="">-- Select Reminder Type --</option>
-                            <option value="CollectPayment">Collect Payment</option>
-                            <option value="CreateStock">Stock Add</option>
-                            <option value="CreateSale">Sale Create</option>
-                            <option value="CreateInvoice">Invoice Create</option>
-                            <option value="CheckCustomerAccounting">Check Customer Accounting</option>
+                            <option value="Collect Payment">Collect Payment</option>
+                            <option value="Create Stock">Stock Add</option>
+                            <option value="Create Sale">Sale Create</option>
+                            <option value="Create Invoice">Invoice Create</option>
+                            <option value="Check Customer Accounting">Check Customer Accounting</option>
                             <option value="Other">Custom..</option>
                         </select>
                         <span style="color:red; font-weight:bold" asp-validation-for="ReminderType"></span>

@@ -129,7 +129,7 @@ namespace Stock_Management_System.Areas.Manage.Controllers
             }
 
             // Construct the full URL including the email as a query parameter
-            var url = $"https://stock-manage-api-shree-ganesh-agro-ind.somee.com/Auth/request-reset?email={Uri.EscapeDataString(email)}";
+            var url = $"https://shree-ganesh-agro.runasp.net/Auth/request-reset?email={Uri.EscapeDataString(email)}";
 
             HttpResponseMessage response = await _Client.GetAsync(url);
             if (response.IsSuccessStatusCode)
