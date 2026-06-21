@@ -4566,7 +4566,7 @@ span.select2-container.select2-container--default.select2-container--open {
                 }
 
             .sidebar .sidebar-menu > ul > li > a.active {
-                background: #1b2850;
+                background: #009541;
                 color: #fff;
                 border-radius: 5px;
             }
@@ -4646,12 +4646,12 @@ span.select2-container.select2-container--default.select2-container--open {
             }
 
                 .sidebar .sidebar-menu > ul > li.submenu ul li a.active {
-                    color: #092c4c;
+                    color: #009541;
                 }
 
                     .sidebar .sidebar-menu > ul > li.submenu ul li a.active:after {
-                        background: #092c4c;
-                        border: 1px solid #092c4c;
+                        background: #009541;
+                        border: 1px solid #009541;
                     }
 
                 .sidebar .sidebar-menu > ul > li.submenu ul li a::after {

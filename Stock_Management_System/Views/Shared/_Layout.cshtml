@@ -1,4 +1,4 @@
-﻿﻿@using Stock_Management_System.BAL;
+﻿@using Stock_Management_System.BAL;
 
 @inject CV cv
 
@@ -304,9 +304,90 @@
     <script src="~/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
-
-
-
+    <script>
+        $(document).ready(function () {
+            var currentPath = window.location.pathname.toLowerCase();
+            
+            // Remove trailing slash if exists (except for root path)
+            if (currentPath.length > 1 && currentPath.endsWith('/')) {
+                currentPath = currentPath.substring(0, currentPath.length - 1);
+            }
+            
+            var activeLink = null;
+            
+            // 1. Try to find exact match on non-submenu toggle links
+            $('#sidebar-menu a').each(function () {
+                if ($(this).parent().hasClass('submenu')) {
+                    return; // Skip submenu toggle links
+                }
+                
+                var href = $(this).attr('href');
+                if (href) {
+                    var linkPath = href.toLowerCase();
+                    try {
+                        linkPath = new URL(href, window.location.origin).pathname.toLowerCase();
+                    } catch (e) {}
+                    
+                    if (linkPath.length > 1 && linkPath.endsWith('/')) {
+                        linkPath = linkPath.substring(0, linkPath.length - 1);
+                    }
+                    
+                    if (linkPath === currentPath) {
+                        activeLink = $(this);
+                        return false; // Break loop
+                    }
+                }
+            });
+            
+            // 2. Fallback matching: match by controller prefix
+            if (!activeLink) {
+                var pathParts = currentPath.split('/').filter(Boolean); // e.g. ["stock", "editstock"]
+                if (pathParts.length > 0) {
+                    var controllerName = pathParts[0]; // e.g. "stock"
+                    
+                    $('#sidebar-menu a').each(function () {
+                        if ($(this).parent().hasClass('submenu')) {
+                            return; // Skip submenu toggle links
+                        }
+                        
+                        var href = $(this).attr('href');
+                        if (href) {
+                            var linkPath = href.toLowerCase();
+                            try {
+                                linkPath = new URL(href, window.location.origin).pathname.toLowerCase();
+                            } catch (e) {}
+                            
+                            var linkParts = linkPath.split('/').filter(Boolean);
+                            if (linkParts.length > 0 && linkParts[0] === controllerName) {
+                                activeLink = $(this);
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // 3. Set active classes and expand submenus
+            if (activeLink) {
+                // Clear any existing active class first to avoid duplicates
+                $('#sidebar-menu li, #sidebar-menu a').removeClass('active subdrop');
+                $('#sidebar-menu ul').css('display', '');
+                
+                var parentUl = activeLink.closest('ul');
+                var parentLi = parentUl.parent();
+                
+                if (parentLi.hasClass('submenu')) {
+                    // Submenu item
+                    activeLink.addClass('active');
+                    parentLi.children('a').addClass('subdrop active');
+                    parentUl.show(); // Expand submenu list
+                } else {
+                    // Top-level item (like Dashboard)
+                    activeLink.addClass('active');
+                    activeLink.closest('li').addClass('active');
+                }
+            }
+        });
+    </script>
 </body>
 
 
