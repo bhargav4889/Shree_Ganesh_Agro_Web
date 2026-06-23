@@ -2,7 +2,7 @@
 
 A premium, feature-rich web application designed for **Shree Ganesh Agro Industries** to manage agricultural stocks, sales, invoices, client ledger balances, and bank transactions. 
 
-The application serves as a highly responsive client-side interface that communicates asynchronously with a secure external REST API backend database.
+The application serves as a highly responsive client-side interface that communicates asynchronously with a secure external REST API backend database. The backend services code repository is hosted at [Shree_Ganesh_Agro_API](https://github.com/bhargav4889/Shree_Ganesh_Agro_API).
 
 ---
 
