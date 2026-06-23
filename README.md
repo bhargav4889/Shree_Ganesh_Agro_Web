@@ -1,119 +1,122 @@
 # Stock Management System - Shree Ganesh Agro Industries
 
-A premium, feature-rich ASP.NET Core MVC Web Application designed for **Shree Ganesh Agro Industries** to manage agricultural stocks, sales, invoices, client ledger balances, and bank transactions. 
+A premium, feature-rich web application designed for **Shree Ganesh Agro Industries** to manage agricultural stocks, sales, invoices, client ledger balances, and bank transactions. 
 
-This project is built using a decoupled architecture, serving as a highly responsive client-side frontend that communicates with an external secure REST API backend.
-
----
-
-## 🏗️ Project Architecture & Tech Stack
-
-This project is structured as a standard ASP.NET Core MVC application utilizing **Areas** to enforce domain boundaries and keep the codebase modular, clean, and easily maintainable.
-
-### Backend Communications
-The application is entirely decoupled from the database. It communicates with a remote secure REST API hosted at:
-`https://stock-manage-api-shree-ganesh-agro-ind.somee.com/api`
-
-Data fetching, posting, updating, and deleting are handled asynchronously through a centralized service class: [Api_Service.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/API_Services/Api_Service.cs).
-
-### Core Technology Stack
-* **Framework:** ASP.NET Core (MVC Pattern)
-* **Optimization:** [WebOptimizer](https://github.com/ligershark/WebOptimizer) for dynamic JavaScript minification and bundling at runtime
-* **PDF Rendering:** [iTextSharp](https://github.com/itext/itextsharp) for custom PDF invoice creation, bilingual text rendering, and watermark designs
-* **Excel Reporting:** [ClosedXML](https://github.com/ClosedXML/ClosedXML) for generating standard spreadsheets
-* **JSON Serialization:** Newtonsoft.Json
-* **Security:** AES-based URL Parameter Encryption (`UrlEncryptor`), JWT Session-based Authorization, and HTTP header Cache-Control prevention.
-* **Emailing:** SMTP Client configured for transactional mail (Password recovery)
+The application serves as a highly responsive client-side interface that communicates asynchronously with a secure external REST API backend database. The backend services code repository is hosted at [Shree_Ganesh_Agro_API](https://github.com/bhargav4889/Shree_Ganesh_Agro_API).
 
 ---
 
-## 📁 Codebase Directory Structure
+## 🧭 Project Features & Functionality (Simple Explanation)
+
+Below is an overview of what the application does and how it works, explained in simple, everyday terms.
+
+### 1. Dashboard Command Center
+* **What it is:** The main overview page that you see as soon as you log in.
+* **How it helps:** It summarizes key numbers at a glance (such as total stock purchases, sales, and active clients) and alerts the manager about overdue payments, upcoming task reminders, and recent system actions.
+
+### 2. Stock Management (Buying Inventory)
+* **What it is:** A portal to record raw grain stock purchased from suppliers.
+* **How it helps:** You can enter the purchase date, grain types, bag counts, and net weight. It also records transport details (vehicle license numbers) and the operating weighbridge operator.
+* **Smart Feature:** If a supplier is new, the manager can create their profile directly inside the stock form without having to leave the page.
+
+### 3. Customer Directory & Running Ledgers
+* **What it is:** A digital directory of all buyers and suppliers (referred to as "parties").
+* **How it helps:** It classifies profiles to ensure suppliers only show up in purchase forms and buyers in sales forms.
+* **Ledger Engine:** Every purchase and sale automatically updates the customer's chronological ledger. You can view their full history of transactions and download clean account statements in PDF or Excel sheets at any time.
+
+### 4. Sales & Orders (Selling Inventory)
+* **What it is:** A page to record sales made to buyers.
+* **How it helps:** To save time, typing a buyer's name triggers a smart autocomplete suggestion, pulling their contact information instantly.
+* **Calculations:** The system dynamically calculates the total price and bags weight based on the input rate as the operator types.
+
+### 5. Bilingual PDF Invoices
+* **What it is:** A professional billing engine.
+* **How it helps:** It programmatically generates bills in PDF format.
+* **Key Features:** It supports regional languages, rendering grain names in Gujarati alongside English billing labels, embeds the Indian Rupee symbol (₹) correctly, and includes a preview cache so users can review the document in the browser before printing.
+
+### 6. Payment States & Financial Locks
+* **What it is:** A system to track paid, unpaid, and partially paid balances.
+* **How it works:** It categorizes transactions into **Pending** (no payment made), **Remain** (partial payment logged, carrying an outstanding balance), and **Paid** (fully cleared invoice).
+* **Audit Protection:** To prevent fraud or ledger tampering, once a payment is saved, it is locked. To correct a mistake, the payment record must be deleted (which resets the state to Pending) and re-entered with correct values.
+
+### 7. Task Reminders
+* **What it is:** A scheduling calendar for the management team.
+* **How it helps:** The manager can create reminders with a specific title, description, and target time. Active reminders automatically pop up as warnings on the dashboard.
+
+### 8. Bank Details Configuration
+* **What it is:** A list of corporate bank profiles (Account numbers, IFSC, branch names).
+* **How it helps:** Stored bank details link directly to payment forms, auto-mapping accounts with official bank logos in dropdown selectors for clean UI visuals.
+
+### 9. Security & URL Protection
+* **What it is:** Built-in safeguards to protect sensitive business data.
+* **How it works:** 
+  * It encrypts database IDs inside URLs to prevent query tampering.
+  * It logs out inactive users and uses a no-cache filter, making it impossible for someone to hit the back button and view private dashboard info after logging out.
+  * It requires JWT security tokens to authorize every database action.
+
+---
+
+## 📁 Project Directory Structure
+
+The project is organized in a modular structure using **Areas** to separate different business features:
 
 ```
 Stock_Management_System/
 │
-├── 📂 API_Services/          # Helper class for centralizing HTTP API requests 
-├── 📂 All_DropDowns/         # Centralized model/class to manage lists of dropdown values (Products, Vehicles, Grades)
-├── 📂 Areas/                 # Main business modules grouped by Areas
-│   ├── 📂 Accounts/          # Customer profile creation, updating, accounts ledger & PDF/Excel summaries
-│   ├── 📂 Information/       # Bank information configurations of company/partners
-│   ├── 📂 Invoices/          # Purchase and Sales invoice creation, previewing, and PDF layout rendering
-│   ├── 📂 Manage/            # Auth, Dashboard summary, Payments tracking, and Reminders
-│   ├── 📂 Sales/             # Sales transactions, seller accounts integration, and exports
-│   └── 📂 Stocks/            # Purchased stocks tracking, supplier association, and reporting
+├── 📂 API_Services/          # Service classes that route HTTP requests to the REST API database
+├── 📂 All_DropDowns/         # Parameter models for dropdown listings (Products, Vehicles, Operators)
+├── 📂 Areas/                 # Modular functional components of the application
+│   ├── 📂 Accounts/          # Customer profiles directory, ledger calculations, and account exports
+│   ├── 📂 Information/       # Stored corporate bank accounts configuration details
+│   ├── 📂 Invoices/          # Billing layouts, bilingual PDF generation, and preview cache maps
+│   ├── 📂 Manage/            # Auth/Login, Dashboard widgets, Payment state logs, and Reminders
+│   ├── 📂 Sales/             # Sales transactions logging, autocomplete searches, and data sheets
+│   └── 📂 Stocks/            # Stock registrations, inventory logs, and inline supplier setup
 │
-├── 📂 BAL/                   # Business Access Layer (Access filters, Common Session Variables)
-├── 📂 Controllers/           # Application-level Controllers (Home, Index, etc.)
-├── 📂 Email_Services/        # Email-sending services & SMTP integrations
-├── 📂 Models/                # General shared models
-├── 📂 Services/              # Custom attributes (e.g., Preventing browser back caching)
-├── 📂 UrlEncryption/         # Security helper for encrypting numerical identifiers in URL parameters
-├── 📂 Views/                 # Layouts and shared views (Login Layout, Main Dashboard Layout)
-├── 📂 wwwroot/               # Static assets (custom JS scripts, CSS styles, images, plugins)
+├── 📂 BAL/                   # Business Access Layer (Access checks & User Session helper models)
+├── 📂 Controllers/           # Default page routing (HomeController, public Tour showcase page)
+├── 📂 Email_Services/        # SMTP mail services for transactional password recovery links
+├── 📂 Models/                # Shared data transfer objects (DTOs)
+├── 📂 Services/              # Custom attributes (Cache-control attributes for logout protection)
+├── 📂 UrlEncryption/         # AES-128 security helper class for URL parameter safeguarding
+├── 📂 Views/                 # Layout wrappers and shared pages (Login Layout, Sidebar wrapper)
+├── 📂 wwwroot/               # Static assets (custom CSS files, JS files, images, third-party plug-ins)
 │
-├── 📝 Program.cs             # Application configuration, dependency injection, and request pipeline pipeline
-├── 📝 appsettings.json       # App configuration settings (SMTP details, logging)
-└── 📝 Stock_Management_System.csproj
+├── 📝 Program.cs             # Application configuration, dependency injection, and routing pipeline
+├── 📝 appsettings.json       # App configuration settings (SMTP settings, logging levels)
+└── 📝 Stock_Management_System.sln
 ```
 
 ---
 
-## 🛠️ Detailed Step-by-Step Feature Walkthrough
+## 💻 Code Standards & Design Architecture
 
-### Step 1: Authentication & Security
-* **JWT Session-Based Auth:** Users authenticate via the `/Auth/Login` endpoint. On success, the API returns a JWT Bearer Token, which the application stores in the session (`JWT_Token`) along with user metadata (`Auth_ID`, `Auth_Name`, `Auth_Email`, `Auth_Phone`). Every outgoing API request is injected with a `Bearer <token>` Authorization Header.
-* **Access Filtering:** Pages are protected with a custom filter [CheckAccess.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/BAL/CheckAccess.cs). If a session expires or is missing, users are redirected back to the Login page with a `returnTo` URL parameter to resume where they left off.
-* **Cache Control:** The application uses [PreventBackButtonAttribute.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/Services/PreventBackButtonAttribute.cs) and `OnResultExecuting` filters to append HTTP response headers (`no-cache`, `no-store`). This ensures that after logging out, clicking the browser's back button will not display cached dashboard data.
-* **URL Parameter Tampering Defense:** ID parameters in URLs are encrypted using AES-128 via the static [UrlEncryptor.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/UrlEncryption/UrlEncryptor.cs) class. Encrypted values use a URL-safe Base64 character set (replacing `+` with `$`, `/` with `_`, and removing trailing `=`).
-* **Credentials Recovery:** Contains a complete password reset and recovery loop. The system checks email registration, issues temporary reset tokens (using an SMTP service), and validates tokens to securely load the Reset Password page.
+The codebase follows clean software engineering principles, ensuring that the application remains maintainable, scalable, and secure.
 
-### Step 2: Dashboard Overview & Metrics
-* Located inside `Areas/Manage/Views/Manage/Dashboard.cshtml`, this is the command center of the system.
-* Displays dynamic count metrics fetched from `/Counts` API endpoint (e.g., totals of stocks, sales, clients).
-* Integrates three distinct widgets:
-  1. **Ledger Overdue Tracking:** Lists customers with pending payments.
-  2. **Audit Trails:** Displays an activity feed of recent operations.
-  3. **Task Reminders:** Showcases upcoming schedules and deadlines.
+### 1. MVC Architecture (Model-View-Controller)
+The project strictly enforces separation of concerns:
+* **Models:** Strongly typed classes mapping data structures.
+* **Views:** Dynamic HTML/Razor views that render the user interface.
+* **Controllers:** Coordinate input requests, call backend services, and return views or JSON results.
 
-### Step 3: Stock Management
-* Managed within `Areas/Stocks/Controllers/StockController.cs`.
-* Supports full CRUD operations to track purchased agricultural inventory.
-* **Integrated Supplier Addition:** While adding new purchase stock, if a supplier (customer) doesn't exist, the UI allows adding the supplier inline dynamically without breaking the data entry flow.
-* **Dropdown Automation:** Dynamically loads grades, products (supports Gujarati and English labels), and vehicles for the transportation details.
-* **Exports:** Downloadable summary reports of the stock inventory in PDF and Excel formats.
+### 2. Asynchronous API Client Service
+* The presentation layer is fully decoupled from data storage.
+* All data requests are channeled asynchronously through a centralized service helper class ([Api_Service.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/API_Services/Api_Service.cs)) using C#'s `async/await` keywords.
+* Outgoing requests automatically inherit and inject active JWT Bearer authentication headers from the user session.
 
-### Step 4: Sales Management
-* Located under `Areas/Sales/Controllers/SaleController.cs`.
-* Tracks the selling transactions of agricultural stocks to customers/buyers.
-* Employs an autocomplete textbox feature (`GetSellerCustomerData`) to check if a buyer already exists, loading their profile properties instantly.
-* Saves transactions and prints sales ledger summaries to Excel and PDF formats.
+### 3. Coding Style & Naming Conventions
+* **Classes & Interfaces:** PascalCase (e.g. `AccountController`, `IEmailSender`).
+* **Variables & Method Arguments:** camelCase (e.g. `information_Model`, `returnTo`).
+* **Regions:** Group related functionalities (e.g., `#region Section: Create Customer` ... `#endregion`) to maintain readable files.
+* **Strong Typing:** Models utilize validation data annotations (such as `[Required]`, `[EmailAddress]`) to ensure database sanitization before form submissions.
 
-### Step 5: Advanced Invoicing & Bilingual PDF Layouts
-* Created via `Areas/Invoices/Controllers/InvoiceController.cs`.
-* **Dynamic Preview:** Invoices are cached in the HTTP session with a unique GUID token so users can preview the rendered format before saving or printing.
-* **Custom PDF Generation:** The invoice PDF layout is programmatically generated using the `iTextSharp` library. Key layout details include:
-  * **Bilingual Support:** Embeds a local Gujarati Unicode font file (`NotoSansGujarati.ttf`) to print product names in Gujarati.
-  * **Indian Currency Symbol:** Embeds a custom symbol font (`Rupee.ttf`) to print the `₹` symbol correctly.
-  * **Watermarking:** Automatically scales and renders a watermarked background logo onto the PDF canvas.
-  * **Dynamic Layouts:** Generates formatted lines, headers, tables, totals, signatures, and contact numbers.
+### 4. Custom Filters & Middleware
+* **Authorization checks:** Protected controller methods utilize a custom `[CheckAccess]` filter attribute, checking session states and automatically handling unauthorized redirections.
+* **Browser Caching Prevention:** Utilizes a custom `[PreventBackButtonAttribute]` that overrides HTTP response headers (`Cache-Control`, `Expires`, `Pragma`) to disable browser back-button history caches for secure workspaces.
 
-### Step 6: Payment Tracking & States
-* Controlled by `Areas/Manage/Controllers/PaymentController.cs`.
-* Classifies payments into three distinct categories:
-  1. **Paid Payments:** Accounts with fully cleared invoice balances.
-  2. **Pending Payments:** Sales/purchases awaiting payment processing.
-  3. **Remaining Payments:** Partials where a user made a partial deposit but carries a remaining balance.
-* Payment logs support partial view modals (`_PaymentInfo_Box`, `_RemainPaymentInfo_Box`) for inline updates, along with dedicated Excel and PDF summary sheets.
+### 5. Query Parameter Encryption
+* Database primary keys are never exposed in URL strings.
+* Identifiers are obfuscated into URL-safe Base64 strings using AES-128 encryption through [UrlEncryptor.cs](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/UrlEncryption/UrlEncryptor.cs) before rendering links.
 
-### Step 7: Bank & Company Information
-* Created in `Areas/Information/Controllers/InformationController.cs`.
-* Allows administrators to configure and save bank details (Account Numbers, IFSC Codes, Branch names) for easy retrieval during transaction recording.
-* Appends official bank logos dynamically to enhance UI representation in select dropdown lists.
-
-### Step 8: Scheduler & Reminders
-* Administered by `Areas/Manage/Controllers/ReminderController.cs`.
-* Allows creating task alerts, specifying titles, description summaries, target times, and active flags.
-* Integrated with the dashboard so upcoming reminders pop up on the manager's screen upon logging in.
-
----
-Once started, the application will bind to the configured local port (typically `https://localhost:7148` or `http://localhost:5148`), which you can inspect in [launchSettings.json](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/Properties/launchSettings.json).
+### 6. Dynamic Script Optimization
+* Utilizes the `WebOptimizer` pipeline in `Program.cs` to bundle and minify JavaScript and stylesheet files dynamically at startup, optimizing client-side delivery.
