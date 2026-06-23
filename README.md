@@ -116,32 +116,4 @@ Stock_Management_System/
 * Integrated with the dashboard so upcoming reminders pop up on the manager's screen upon logging in.
 
 ---
-
-## ⚙️ Configuration & Setup
-
-### 1. SMTP Email Credentials
-To ensure password recovery emails function correctly, edit [appsettings.json](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/appsettings.json) and enter your Gmail App Password credentials:
-```json
-"EmailSettings": {
-  "Host": "smtp.gmail.com",
-  "Port": "587",
-  "EnableSSL": "true",
-  "UserName": "your-email@gmail.com",
-  "Password": "your-app-password"
-}
-```
-
-### 2. Run the Application
-Make sure you have the .NET SDK installed (v6.0 or higher recommended). Execute the following commands in the workspace root directory:
-
-```bash
-# Restore package dependencies
-dotnet restore
-
-# Build the project
-dotnet build
-
-# Run the web application locally
-dotnet run
-```
 Once started, the application will bind to the configured local port (typically `https://localhost:7148` or `http://localhost:5148`), which you can inspect in [launchSettings.json](file:///e:/DOTNET/Stock_Management_System/Stock_Management_System/Properties/launchSettings.json).
